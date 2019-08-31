@@ -36,7 +36,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Contact" leftItemsSupplementBackButton="YES" id="BVM-Ju-hCF"/>
+                    <navigationItem key="navigationItem" title="Contact" leftItemsSupplementBackButton="YES" id="BVM-Ju-hCF">
+                        <barButtonItem key="leftBarButtonItem" title="Group" id="mkQ-27-5z4"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="w6V-CL-GuY"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="contactListTable" destination="g9n-vD-tjN" id="uWa-Yb-5cd"/>
                     </connections>

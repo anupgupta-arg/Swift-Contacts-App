@@ -13,7 +13,9 @@ class ContactScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        contactListTable.register(UINib(nibName:"ContactCell",bundle: nil), forCellReuseIdentifier: "ContactCellID")
+        
+        contactListTable.tableFooterView = UIView();
        
     }
     
@@ -23,11 +25,14 @@ class ContactScreenVC: UIViewController {
 
 extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        return 10;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell : ContactCell = contactListTable.dequeueReusableCell(withIdentifier: "ContactCellID") as! ContactCell
+        cell.contactName.text = "Anup";
+        return cell;
+        
     }
     
     
