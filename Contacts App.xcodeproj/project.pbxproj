@@ -19,6 +19,8 @@
 		E5B39AAD231A2D5000A61083 /* ContactScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39AAC231A2D5000A61083 /* ContactScreenVC.swift */; };
 		E5B39AB0231A2DFE00A61083 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39AAE231A2DFE00A61083 /* ContactCell.swift */; };
 		E5B39AB1231A2DFE00A61083 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5B39AAF231A2DFE00A61083 /* ContactCell.xib */; };
+		E5B39AB3231A488200A61083 /* AlamofireConnectionMangager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39AB2231A488200A61083 /* AlamofireConnectionMangager.swift */; };
+		E5B39AB5231A4FC100A61083 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39AB4231A4FC100A61083 /* Constant.swift */; };
 		EC7DFB691171001FE5361B19 /* Pods_Contacts_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81428CC101388B79B4CCBAC7 /* Pods_Contacts_AppTests.framework */; };
 		EE3B3A0FB88972FCB135BB32 /* Pods_Contacts_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4418FCA612E0C4E1D4CB8162 /* Pods_Contacts_AppUITests.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +68,8 @@
 		E5B39AAC231A2D5000A61083 /* ContactScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactScreenVC.swift; sourceTree = "<group>"; };
 		E5B39AAE231A2DFE00A61083 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		E5B39AAF231A2DFE00A61083 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		E5B39AB2231A488200A61083 /* AlamofireConnectionMangager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireConnectionMangager.swift; sourceTree = "<group>"; };
+		E5B39AB4231A4FC100A61083 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		FC0BBDA4AC83A8DA22B291FB /* Pods-Contacts App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts App.debug.xcconfig"; path = "Target Support Files/Pods-Contacts App/Pods-Contacts App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +121,6 @@
 				DDD4965BDF09994BE0B8AEAC /* Pods-Contacts AppUITests.debug.xcconfig */,
 				73ABB0F69C488A39BA9E19E6 /* Pods-Contacts AppUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -151,6 +154,8 @@
 				E5B39AAC231A2D5000A61083 /* ContactScreenVC.swift */,
 				E5B39A7F231A2C6F00A61083 /* Main.storyboard */,
 				E5B39AAE231A2DFE00A61083 /* ContactCell.swift */,
+				E5B39AB2231A488200A61083 /* AlamofireConnectionMangager.swift */,
+				E5B39AB4231A4FC100A61083 /* Constant.swift */,
 				E5B39AAF231A2DFE00A61083 /* ContactCell.xib */,
 				E5B39A85231A2C7100A61083 /* Assets.xcassets */,
 				E5B39A87231A2C7100A61083 /* LaunchScreen.storyboard */,
@@ -407,8 +412,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B39AB5231A4FC100A61083 /* Constant.swift in Sources */,
 				E5B39AB0231A2DFE00A61083 /* ContactCell.swift in Sources */,
 				E5B39A84231A2C6F00A61083 /* Contacts_App.xcdatamodeld in Sources */,
+				E5B39AB3231A488200A61083 /* AlamofireConnectionMangager.swift in Sources */,
 				E5B39AAD231A2D5000A61083 /* ContactScreenVC.swift in Sources */,
 				E5B39A7E231A2C6F00A61083 /* ViewController.swift in Sources */,
 				E5B39A7C231A2C6F00A61083 /* AppDelegate.swift in Sources */,
