@@ -11,3 +11,4 @@ import Foundation
 
 
 let baseUrl = "https://gojek-contacts-app.herokuapp.com/contacts.json";
+let updatePeopleDetailsURL = "http://gojek-contacts-app.herokuapp.com/contacts/";

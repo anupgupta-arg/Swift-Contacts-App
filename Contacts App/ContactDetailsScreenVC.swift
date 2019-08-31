@@ -23,12 +23,15 @@ class ContactDetailsScreenVC: UIViewController {
         super.viewDidLoad()
         fillDetails()
         fetchPeopleCompleteDeatils()
+//        avatar.layer.cornerRadius = 50
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-//        navigationController?.navigationBar.le
+        let edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
+       
+        navigationItem.rightBarButtonItem = edit
     }
     
     @IBAction func messageButtonAction(_ sender: Any) {
@@ -38,6 +41,15 @@ class ContactDetailsScreenVC: UIViewController {
     @IBAction func emailButtonAction(_ sender: Any) {
     }
     @IBAction func favButtonAction(_ sender: Any) {
+    }
+    
+    @objc func editButtonTapped()  {
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
+        vc.peopleContactUpdated = peopleContactUpdated;
+//        navigationController?.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }
