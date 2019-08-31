@@ -41,6 +41,12 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
         return cell;
         
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : ContactDetailsScreenVC = storyBoard.instantiateViewController(withIdentifier: "ContactDetailsScreenVCID") as! ContactDetailsScreenVC
+        vc.peopleContactDeatils = contact[indexPath.row];
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     
 }
@@ -52,51 +58,15 @@ extension ContactScreenVC {
             guard let data = response.data else { return }
             do {
                 let decoder = JSONDecoder()
-                let tweetRequest = try decoder.decode([ContactList].self, from: data)
-                print(tweetRequest)
-                self.contact = tweetRequest
+                let allContact = try decoder.decode([ContactList].self, from: data)
+                self.contact = allContact
                 self.contactListTable.reloadData()
-               // completion(tweetRequest)
+               
             } catch let error {
                 print(error)
-               // completion(nil)
             }
         }
     }
     
     
-}
-
-
-struct ContactList : Codable{
-    
-    let id: Int
-    let first_name: String
-    let last_name: String
-    let profile_pic: String
-    let favorite: Bool
-    let url: String
-    
-//    let id : Int?
-//    let firstName : String?
-//    let lastName : String?
-//    let profilePicURL : String?
-//    let favorite : Bool?
-//    let contactURL : String?
-//
-//    private enum CodingKeys: String, CodingKey {
-//        case id = "id"
-//        case firstName = "first_name"
-//        case lastName = "last_name"
-//        case profilePicURL = "profile_pic"
-//        case favorite = "favorite"
-//        case contactURL = "url"
-//
-//    }
-//    "id": 10140,
-//    "first_name": "aaaaakam",
-//    "last_name": "dfsdsdfs",
-//    "profile_pic": "/images/missing.png",
-//    "favorite": true,
-//    "url": "http://gojek-contacts-app.herokuapp.com/contacts/10140.json"
 }
