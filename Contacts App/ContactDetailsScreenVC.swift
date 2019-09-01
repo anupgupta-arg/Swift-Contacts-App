@@ -26,24 +26,27 @@ class ContactDetailsScreenVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fillDetails()
-        fetchPeopleCompleteDeatils()
+   
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         let edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
-        
+        fetchPeopleCompleteDeatils()
+        fillDetails()
         navigationItem.rightBarButtonItem = edit
     }
     
     @IBAction func messageButtonAction(_ sender: Any) {
         guard MFMessageComposeViewController.canSendText() else {
-            print("Message Did Not Configure")
+           // print("Message Did Not Configure")
+            self.showAlert(title: "Sorry", message: "Message Did Not Configure")
             return
         }
         guard let number = peopleContactDetails?.phone_number else {
             // Show alert message
+        self.showAlert(title: "Sorry", message: "Phone Number is not correct")
             return;
         }
         let messageVC = MFMessageComposeViewController()
@@ -57,6 +60,7 @@ class ContactDetailsScreenVC: UIViewController{
         guard let number = peopleContactDetails?.phone_number else {
             // Show alert message
             print("call Did Not Configure")
+             self.showAlert(title: "Sorry", message: "Phone Number is not correct")
             return;
         }
         
@@ -68,7 +72,7 @@ class ContactDetailsScreenVC: UIViewController{
                 UIApplication.shared.openURL(url)
             }
         }else{
-            
+            self.showAlert(title: "Sorry", message: "Phone Number is not correct")
         }
     }
     @IBAction func emailButtonAction(_ sender: Any) {
@@ -76,10 +80,11 @@ class ContactDetailsScreenVC: UIViewController{
         guard MFMailComposeViewController.canSendMail() else {
             // Show alert message
             print("Mail Did Not Configure")
+            self.showAlert(title: "Sorry", message: "Mail box Did Not Configure")
             return
         }
         guard let recipient = peopleContactDetails?.email else{
-            print("Mail Did Not Configure")
+            self.showAlert(title: "Sorry", message: "NO email address availabel")
             return
         }
             let mail = MFMailComposeViewController()
@@ -90,6 +95,7 @@ class ContactDetailsScreenVC: UIViewController{
             present(mail, animated: true)
        
     }
+    
     @IBAction func favButtonAction(_ sender: Any) {
         if peopleContactDetails?.id == 0 {
             addNewContact();
@@ -114,21 +120,28 @@ class ContactDetailsScreenVC: UIViewController{
 }
 extension ContactDetailsScreenVC {
     
-    func fetchPeopleCompleteDeatils() {
-        let peopleurl : String = peopleContactDetails?.url ?? "";
-        guard peopleurl != "" else {
-            return
+
+    
+   func fetchPeopleCompleteDeatils(){
+    
+    guard let id = peopleContactDetails?.id  else{
+        return
+    }
+     let peopleurl = "\(updatePeopleDetailsURL)\(id).json"
+    //let peopleurl : String = peopleContactDetails?.url ?? "";
+    guard peopleurl != "" else {
+        return
+    }
+    Alamofire.request(peopleurl).response { response in
+        guard let data = response.data else { return }
+        do {
+            let decoder = JSONDecoder()
+            self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
+            self.fillDetails();
+        } catch let error {
+            print(error)
         }
-        Alamofire.request(peopleurl).response { response in
-            guard let data = response.data else { return }
-            do {
-                let decoder = JSONDecoder()
-                self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
-                self.fillDetails();
-            } catch let error {
-                print(error)
-            }
-        }
+    }
     }
     
 }
@@ -193,6 +206,8 @@ extension ContactDetailsScreenVC : MFMailComposeViewControllerDelegate {
 
 extension ContactDetailsScreenVC {
     
+   
+    
     func updateContact(){
         
         guard let id = peopleContactDetails?.id else {
@@ -205,7 +220,7 @@ extension ContactDetailsScreenVC {
             isFavorite = false
         }
         else{
-             isFavorite = true
+            isFavorite = true
         }
         
         let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
@@ -216,48 +231,108 @@ extension ContactDetailsScreenVC {
                                          "favorite": isFavorite as Any
         ]
         
-        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-            {
-                (response:DataResponse<Any>) in
-                print("response",response)
-                print("re")
-                
-                if (response.error != nil) {
-                    // failure(response.error);
-                }
-                else if (response.value != nil) {
-                    //success(response.value as! NSDictionary)
-                    
-                    print(response.value as Any)
-                    
-                    guard let data = response.data else { return }
-                    do {
-                        let decoder = JSONDecoder()
-                        self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
-                      // peopleContactDetails = contactDetails
-                        
-                        
-                        self.fillDetails()
-                        
-//                        self.contact.append(contentsOf: allContact)
-//
-//                        self.groupContactArray = self.getGroupArray(modelArray: self.contact)
-//                        self.contactListTable.reloadData()
-                        //   print("test",test)
-                        
-                        
-                    } catch let error {
-                        print(error)
-                    }
-                    
-                }
-                
-                
-        }
+        let apiCallObj = apiCall.init()
+        apiCallObj.updateContact(apiUrl: updateUrl, userDict: userDict, success: { (contactDetails) -> Void in
+            self.peopleContactDetails = contactDetails
+            self.fillDetails();
+             // show alert
+        },failure:  { (Error) -> Void in
+            
+            print("Error", Error as Any);
+             // show alert
+        })
     }
+
+//    func updateContact(){
+//
+//        guard let id = peopleContactDetails?.id else {
+//            return;
+//        }
+//
+//        let updateUrl = "\(updatePeopleDetailsURL)\(id).json"
+//        let isFavorite: Bool?
+//        if peopleContactDetails!.favorite {
+//            isFavorite = false
+//        }
+//        else{
+//             isFavorite = true
+//        }
+//
+//        let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
+//                                         "last_name":  peopleContactDetails?.last_name as Any,
+//                                         "email": peopleContactDetails?.email as Any ,
+//                                         "phone_number": peopleContactDetails?.phone_number as Any ,
+//                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
+//                                         "favorite": isFavorite as Any
+//        ]
+//
+//        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
+//            {
+//                (response:DataResponse<Any>) in
+//                print("response",response)
+//                print("re")
+//
+//                if (response.error != nil) {
+//                    // failure(response.error);
+//                }
+//                else if (response.value != nil) {
+//                    //success(response.value as! NSDictionary)
+//
+//                    print(response.value as Any)
+//
+//                    guard let data = response.data else { return }
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
+//                      // peopleContactDetails = contactDetails
+//
+//
+//                        self.fillDetails()
+//
+////                        self.contact.append(contentsOf: allContact)
+////
+////                        self.groupContactArray = self.getGroupArray(modelArray: self.contact)
+////                        self.contactListTable.reloadData()
+//                        //   print("test",test)
+//
+//
+//                    } catch let error {
+//                        print(error)
+//                    }
+//
+//                }
+//
+//
+//        }
+//    }
+//
     
     func addNewContact() {
         
+        guard peopleContactDetails?.first_name != "" else {
+            print("first nmae111")
+            self.showAlert(title: "Sorry", message: "This user is from your mobile conatct list and this info is wrong ")
+            
+            return
+        }
+        
+        guard peopleContactDetails?.last_name != "" else {
+            print("first nmae2222")
+           self.showAlert(title: "Sorry", message: "This user is from your mobile conatct list and this info is wrong ")
+            return
+        }
+        guard peopleContactDetails?.phone_number != "" && (peopleContactDetails?.phone_number?.isPhoneNumber)!  else {
+            print("first nmae333")
+           self.showAlert(title: "Sorry", message: "This user is from your mobile conatct list and this info is wrong ")
+            return
+        }
+        guard peopleContactDetails?.email != "" && (peopleContactDetails?.email?.isValidEmail())!   else {
+            print("first nmae444")
+           self.showAlert(title: "Sorry", message: "This user is from your mobile conatct list and this info is wrong ")
+            
+            
+            return
+        }
         
         let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
                                          "last_name":  peopleContactDetails?.last_name as Any,
@@ -266,19 +341,41 @@ extension ContactDetailsScreenVC {
                                          "profile_pic": peopleContactDetails?.profile_pic ?? "",
                                          "favorite": true
         ]
-        
-        Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-            {
-                (response:DataResponse<Any>) in
-                print("response",response)
-                print("re")
-                if (response.error != nil) {
-                    // failure(response.error);
-                }
-                else if (response.value != nil) {
-                    //success(response.value as! NSDictionary)
-                    print(response.value as Any)
-                }
-        }
+         let apiCallObj = apiCall.init()
+        apiCallObj.addNewContact(userDict: userDict, success: { (contactDetails) -> Void in
+            self.peopleContactDetails = contactDetails
+            self.fillDetails();
+            // show alert
+            
+        }, failure:  { (Error)-> Void in
+            print("Error",Error as Any)
+             // show alert
+        })
     }
+    
+//    func addNewContact() {
+//
+//
+//        let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
+//                                         "last_name":  peopleContactDetails?.last_name as Any,
+//                                         "email": peopleContactDetails?.email as Any ,
+//                                         "phone_number": peopleContactDetails?.phone_number as Any ,
+//                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
+//                                         "favorite": true
+//        ]
+//
+//        Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
+//            {
+//                (response:DataResponse<Any>) in
+//                print("response",response)
+//                print("re")
+//                if (response.error != nil) {
+//                    // failure(response.error);
+//                }
+//                else if (response.value != nil) {
+//                    //success(response.value as! NSDictionary)
+//                    print(response.value as Any)
+//                }
+//        }
+//    }
 }

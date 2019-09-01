@@ -24,7 +24,7 @@ class EditContactDeatilsVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fillData()
+        fillDetails()
         let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         
         navigationItem.rightBarButtonItem = done
@@ -38,7 +38,7 @@ class EditContactDeatilsVC: UIViewController {
 
 extension EditContactDeatilsVC {
     
-    func fillData() {
+    func fillDetails() {
         
         avatar.sd_setImage(with: URL(string: peopleContactDetails?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
         firstNameTextField.text = peopleContactDetails?.first_name ?? ""
@@ -53,26 +53,26 @@ extension EditContactDeatilsVC {
         
         guard firstNameTextField.text != "" else {
             print("first nmae111")
-            self.showErrorAlert(title: "Error", message: "Please enter valid first name.")
- 
+            self.showAlert(title: "Error", message: "Please enter valid first name.")
+            
             return
         }
         
         guard lastNameTextField.text != "" else {
-             print("first nmae2222")
-             self.showErrorAlert(title: "Error", message: "Please enter valid last name")
+            print("first nmae2222")
+            self.showAlert(title: "Error", message: "Please enter valid last name")
             return
         }
         guard mobileNumberTextField.text != "" && mobileNumberTextField.text!.isPhoneNumber  else {
-             print("first nmae333")
-             self.showErrorAlert(title: "Error", message: "Please enter valid mobile number")
+            print("first nmae333")
+            self.showAlert(title: "Error", message: "Please enter valid mobile number")
             return
         }
         guard emailTextField.text != "" && (emailTextField.text?.isValidEmail())!   else {
-             print("first nmae444")
-            self.showErrorAlert(title: "Error", message: "Please enter valid email")
-           
-           
+            print("first nmae444")
+            self.showAlert(title: "Error", message: "Please enter valid email")
+            
+            
             return
         }
         
@@ -86,10 +86,17 @@ extension EditContactDeatilsVC {
         
         
     }
+    
  
+    
     func updateContact(){
         
-        let updateUrl = "\(updatePeopleDetailsURL)\(String(describing: peopleContactDetails?.id ?? nil) ).json"
+        guard let id = peopleContactDetails?.id else {
+            return;
+        }
+        
+        let updateUrl = "\(updatePeopleDetailsURL)\(id).json"
+        
         
         let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
                                          "last_name": lastNameTextField.text ?? "",
@@ -99,27 +106,21 @@ extension EditContactDeatilsVC {
                                          "favorite": peopleContactDetails?.favorite ?? ""
         ]
         
-        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-            {
-                (response:DataResponse<Any>) in
-                print("response",response)
-                print("re")
-                if (response.error != nil) {
-                    // failure(response.error);
-                }
-                else if (response.value != nil) {
-                    //success(response.value as! NSDictionary)
-                    print(response.value as Any)
-                }
-                
-                
-        }
+        let apiCallObj = apiCall.init()
+        apiCallObj.updateContact(apiUrl: updateUrl, userDict: userDict, success: { (contactDetails) -> Void in
+            self.peopleContactDetails = contactDetails
+            self.fillDetails();
+            // show alert
+            self.showAlert(title: "Success", message: "Conatct Update succesfully")
+        },failure:  { (Error) -> Void in
+            
+            print("Error", Error as Any);
+            // show alert
+             self.showAlert(title: "Error", message: "Something went wrong")
+        })
     }
     
     func addNewContact() {
-        
-        
-      //  let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated?.id ?? nil).json"
         
         let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
                                          "last_name": lastNameTextField.text ?? "",
@@ -127,24 +128,20 @@ extension EditContactDeatilsVC {
                                          "phone_number": mobileNumberTextField.text ?? "",
                                          "profile_pic": peopleContactDetails?.profile_pic ?? "",
                                          "favorite": peopleContactDetails?.favorite ?? "",
-                                       
-        ]
-        
-        Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-            {
-                (response:DataResponse<Any>) in
-                print("response",response)
-                print("re")
-                if (response.error != nil) {
-                    // failure(response.error);
-                }
-                else if (response.value != nil) {
-                    //success(response.value as! NSDictionary)
-                    print(response.value as Any)
-                }
-        }
+                                         
+                                         ]
+        let apiCallObj = apiCall.init()
+        apiCallObj.addNewContact(userDict: userDict, success: { (contactDetails) -> Void in
+            self.peopleContactDetails = contactDetails
+            self.fillDetails();
+            // show alert
+            self.showAlert(title: "Success", message: "Conatct Added succesfully")
+        }, failure:  { (Error)-> Void in
+            print("Error",Error as Any)
+            // show alert
+            self.showAlert(title: "Error", message: Error!.localizedDescription)
+        })
     }
-    
 }
 
 
