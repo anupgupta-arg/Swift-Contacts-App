@@ -16,8 +16,8 @@ class ContactDetailsScreenVC: UIViewController {
     @IBOutlet weak var mobileNumberLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
-    var peopleContactDeatils : ContactList?
-    var peopleContactUpdated : PeopleDetails?
+    var peopleContactDetails : ContactList?
+   // var peopleContactUpdated : PeopleDetails?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ class ContactDetailsScreenVC: UIViewController {
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
-        vc.peopleContactUpdated = peopleContactUpdated;
+        vc.peopleContactDetails = peopleContactDetails;
 //        navigationController?.present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -56,7 +56,7 @@ class ContactDetailsScreenVC: UIViewController {
 extension ContactDetailsScreenVC {
     
     func fetchPeopleCompleteDeatils() {
-        let peopleurl : String = peopleContactDeatils?.url ?? "";
+        let peopleurl : String = peopleContactDetails?.url ?? "";
         guard peopleurl != "" else {
             return
         }
@@ -64,8 +64,8 @@ extension ContactDetailsScreenVC {
             guard let data = response.data else { return }
             do {
                 let decoder = JSONDecoder()
-                self.peopleContactUpdated = try decoder.decode(PeopleDetails.self, from: data)
-                self.updateDetails();
+                self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
+                self.fillDetails();
             } catch let error {
                 print(error)
             }
@@ -77,20 +77,20 @@ extension ContactDetailsScreenVC {
     
     func fillDetails()  {
         
-        avatar.sd_setImage(with: URL(string: peopleContactDeatils?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
-        contactName.text = "\(peopleContactDeatils?.first_name ?? "" ) \(peopleContactDeatils?.last_name ?? "")"
-        mobileNumberLabel.text = ""
-        emailLabel.text = ""
+        avatar.sd_setImage(with: URL(string: peopleContactDetails?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
+        contactName.text = "\(peopleContactDetails?.first_name ?? "" ) \(peopleContactDetails?.last_name ?? "")"
+        mobileNumberLabel.text =  peopleContactDetails?.phone_number
+        emailLabel.text = peopleContactDetails?.email
     }
     
     
-    func updateDetails()  {
-        
-        avatar.sd_setImage(with: URL(string: peopleContactUpdated?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
-        contactName.text = "\(peopleContactUpdated?.first_name ?? "" ) \(peopleContactUpdated?.last_name ?? "")"
-        mobileNumberLabel.text = peopleContactUpdated?.phone_number
-        emailLabel.text = peopleContactUpdated?.email
-    }
+//    func updateDetails()  {
+//
+//        avatar.sd_setImage(with: URL(string: peopleContactDetails?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
+//        contactName.text = "\(peopleContactDetails?.first_name ?? "" ) \(peopleContactDetails?.last_name ?? "")"
+//        mobileNumberLabel.text = peopleContactDetails?.phone_number
+//        emailLabel.text = peopleContactDetails?.email
+//    }
     
     
 }

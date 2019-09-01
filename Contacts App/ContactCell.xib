@@ -36,30 +36,29 @@
                         <color key="textColor" name="Black4A"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQ9-ft-nTf">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fevStarBlank" translatesAutoresizingMaskIntoConstraints="NO" id="mRR-7I-MQ8">
                         <rect key="frame" x="258" y="17" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="NlV-z5-Duq"/>
-                            <constraint firstAttribute="width" constant="30" id="o1T-c6-NnK"/>
+                            <constraint firstAttribute="width" constant="30" id="NRK-aA-EEd"/>
+                            <constraint firstAttribute="height" constant="30" id="zyN-GE-NGC"/>
                         </constraints>
-                        <state key="normal" image="fevStarBlank"/>
-                    </button>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="mRR-7I-MQ8" firstAttribute="leading" secondItem="xlF-nZ-wDp" secondAttribute="trailing" constant="16" id="4Fe-qQ-Hs1"/>
                     <constraint firstItem="jES-79-nf0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4za-Fg-lne"/>
-                    <constraint firstAttribute="trailing" secondItem="BQ9-ft-nTf" secondAttribute="trailing" constant="32" id="BiW-T4-XsD"/>
                     <constraint firstItem="xlF-nZ-wDp" firstAttribute="centerY" secondItem="jES-79-nf0" secondAttribute="centerY" id="PyW-jN-SVh"/>
                     <constraint firstItem="xlF-nZ-wDp" firstAttribute="leading" secondItem="jES-79-nf0" secondAttribute="trailing" constant="16" id="TMB-ne-pRb"/>
+                    <constraint firstAttribute="trailing" secondItem="mRR-7I-MQ8" secondAttribute="trailing" constant="32" id="UdL-aH-qT8"/>
+                    <constraint firstItem="mRR-7I-MQ8" firstAttribute="centerY" secondItem="xlF-nZ-wDp" secondAttribute="centerY" id="jkL-0o-EjO"/>
                     <constraint firstItem="jES-79-nf0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vrk-kX-EYu"/>
-                    <constraint firstItem="BQ9-ft-nTf" firstAttribute="centerY" secondItem="xlF-nZ-wDp" secondAttribute="centerY" id="yEQ-WU-CSI"/>
-                    <constraint firstItem="BQ9-ft-nTf" firstAttribute="leading" secondItem="xlF-nZ-wDp" secondAttribute="trailing" constant="16" id="yeF-OJ-ZsK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avatar" destination="jES-79-nf0" id="cU0-Kr-7XX"/>
                 <outlet property="contactName" destination="xlF-nZ-wDp" id="Ln2-sa-A9f"/>
-                <outlet property="fevbutton" destination="BQ9-ft-nTf" id="vtm-kb-amQ"/>
+                <outlet property="favImage" destination="mRR-7I-MQ8" id="PEF-c3-OFr"/>
             </connections>
         </tableViewCell>
     </objects>

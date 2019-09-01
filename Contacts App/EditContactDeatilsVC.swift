@@ -16,7 +16,7 @@ class EditContactDeatilsVC: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var mobileNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    var peopleContactUpdated : PeopleDetails?
+    var peopleContactDetails : ContactList?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,17 +40,17 @@ extension EditContactDeatilsVC {
     
     func fillData() {
         
-        avatar.sd_setImage(with: URL(string: peopleContactUpdated?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
-        firstNameTextField.text = peopleContactUpdated?.first_name ?? ""
-        lastNameTextField.text = peopleContactUpdated?.last_name ?? ""
-        mobileNumberTextField.text = peopleContactUpdated?.phone_number
-        emailTextField.text = peopleContactUpdated?.email
+        avatar.sd_setImage(with: URL(string: peopleContactDetails?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
+        firstNameTextField.text = peopleContactDetails?.first_name ?? ""
+        lastNameTextField.text = peopleContactDetails?.last_name ?? ""
+        mobileNumberTextField.text = peopleContactDetails?.phone_number
+        emailTextField.text = peopleContactDetails?.email
         
         
     }
     @objc func doneButtonTapped() {
         
-        if peopleContactUpdated == nil {
+        if peopleContactDetails == nil {
             addNewContact();
         }
         else{
@@ -62,14 +62,14 @@ extension EditContactDeatilsVC {
  
     func updateContact(){
         
-        let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated?.id ?? nil).json"
+        let updateUrl = "\(updatePeopleDetailsURL)\(String(describing: peopleContactDetails?.id ?? nil) ).json"
         
         let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
                                          "last_name": lastNameTextField.text ?? "",
                                          "email": emailTextField.text ?? "",
                                          "phone_number": mobileNumberTextField.text ?? "",
-                                         "profile_pic": peopleContactUpdated?.profile_pic ?? "",
-                                         "favorite": peopleContactUpdated?.favorite ?? "",
+                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
+                                         "favorite": peopleContactDetails?.favorite ?? "",
                                          //                                       "created_at": "2016-05-29T10:10:10.995Z",
             //                                       "updated_at": "2016-05-29T10:10:10.995Z"
         ]
@@ -84,7 +84,7 @@ extension EditContactDeatilsVC {
                 }
                 else if (response.value != nil) {
                     //success(response.value as! NSDictionary)
-                    print(response.value)
+                    print(response.value as Any)
                 }
                 
                 
@@ -100,8 +100,8 @@ extension EditContactDeatilsVC {
                                          "last_name": lastNameTextField.text ?? "",
                                          "email": emailTextField.text ?? "",
                                          "phone_number": mobileNumberTextField.text ?? "",
-                                         "profile_pic": peopleContactUpdated?.profile_pic ?? "",
-                                         "favorite": peopleContactUpdated?.favorite ?? "",
+                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
+                                         "favorite": peopleContactDetails?.favorite ?? "",
                                          //                                       "created_at": "2016-05-29T10:10:10.995Z",
             //                                       "updated_at": "2016-05-29T10:10:10.995Z"
         ]

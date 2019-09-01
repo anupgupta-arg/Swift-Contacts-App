@@ -15,7 +15,9 @@ struct ContactList : Codable{
     let last_name: String
     let profile_pic: String
     let favorite: Bool
-    let url: String
+    let url: String?
+    let email: String?
+    let phone_number: String?
     
     //    let id : Int?
     //    let firstName : String?
@@ -43,26 +45,26 @@ struct ContactList : Codable{
 
 
 
-
-struct PeopleDetails : Codable{
-
-    let id: Int
-    let first_name: String
-    let last_name: String
-    let email: String
-    let phone_number: String
-    let profile_pic: String
-    let favorite: Bool
-    
-    
-//    "id": 1,
-//    "first_name": "Amitabh",
-//    "last_name": "Bachchan",
-//    "email": "ab@bachchan.com",
-//    "phone_number": "+919980123412",
-//    "profile_pic": "https://contacts-app.s3-ap-southeast-1.amazonaws.com/contacts/profile_pics/000/000/007/original/ab.jpg?1464516610",
-//    "favorite": false,
-//    "created_at": "2016-05-29T10:10:10.995Z",
-//    "updated_at": "2016-05-29T10:10:10.995Z"
 //
-}
+//struct PeopleDetails : Codable{
+//
+//    let id: Int
+//    let first_name: String
+//    let last_name: String
+//    let email: String
+//    let phone_number: String
+//    let profile_pic: String
+//    let favorite: Bool
+//    
+//    
+////    "id": 1,
+////    "first_name": "Amitabh",
+////    "last_name": "Bachchan",
+////    "email": "ab@bachchan.com",
+////    "phone_number": "+919980123412",
+////    "profile_pic": "https://contacts-app.s3-ap-southeast-1.amazonaws.com/contacts/profile_pics/000/000/007/original/ab.jpg?1464516610",
+////    "favorite": false,
+////    "created_at": "2016-05-29T10:10:10.995Z",
+////    "updated_at": "2016-05-29T10:10:10.995Z"
+////
+//}

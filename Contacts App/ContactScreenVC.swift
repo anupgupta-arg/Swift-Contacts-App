@@ -14,15 +14,12 @@ class ContactScreenVC: UIViewController {
     @IBOutlet weak var contactListTable: UITableView!
     
     var contact = [ContactList]()
-    var people = [PeopleDetails]()
+    //var people = [PeopleDetails]()
     var groupContactArray = [[ContactList]]()
     
     let contactStore = CNContactStore()
     var arrpic = NSMutableArray()
-    var arrfname = NSMutableArray()
-    var arrlname = NSMutableArray()
-    var arrnumber = NSMutableArray()
-    var arrEmail = NSMutableArray()
+   
     
      var arrayIndexSection = [String]()
     
@@ -37,6 +34,8 @@ class ContactScreenVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
+        groupContactArray.removeAll();
+        contact.removeAll();
         getContactListFromContactList();
         getContactListFromBackend();
     }
@@ -44,8 +43,6 @@ class ContactScreenVC: UIViewController {
     @IBAction func addPeopleBarButtonAction(_ sender: Any) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
-        //  vc.peopleContactUpdated = peopleContactUpdated;
-        //        navigationController?.present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -58,6 +55,10 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
        return groupContactArray.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 57
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  groupContactArray[section].count //contact.count; //
@@ -68,6 +69,14 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
         let personDetails = groupContactArray[indexPath.section][indexPath.row] //contact[indexPath.row]; //
         cell.contactName.text = "\(personDetails.first_name ) \(personDetails.last_name )";
         let imgurl = personDetails.profile_pic;
+        if personDetails.favorite {
+             cell.favImage.image = UIImage.init(named: "fevStarGreen")
+        }
+            else{
+             cell.favImage.isHidden = true
+        }
+        
+        
         
         cell.avatar.sd_setImage(with: URL(string: imgurl as String ), placeholderImage:UIImage(named: "contactPlaceHolder") )
         return cell;
@@ -76,12 +85,15 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc : ContactDetailsScreenVC = storyBoard.instantiateViewController(withIdentifier: "ContactDetailsScreenVCID") as! ContactDetailsScreenVC
-        vc.peopleContactDeatils = contact[indexPath.row];
+        let personDetails = groupContactArray[indexPath.section][indexPath.row]
+
+        
+         vc.peopleContactDetails = personDetails;
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(groupContactArray[section].first?.first_name.prefix(1) ?? "")"
+        return "\(groupContactArray[section].first?.first_name.prefix(1).uppercased() ?? "")"
     }
 
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -133,14 +145,11 @@ extension ContactScreenVC {
                 let mobile = $0.phoneNumbers.first?.value.stringValue ?? ""
                 let email = $0.emailAddresses.first?.value ?? ""
                 
-                
-                
-                
-                let tempPeople = PeopleDetails(id: 0, first_name: fname, last_name: lname, email: email as String, phone_number: mobile, profile_pic: "", favorite: false)
-                let tempContact = ContactList(id: 0, first_name: fname, last_name: lname, profile_pic: "", favorite: false, url: "")
+               // let tempPeople = PeopleDetails(id: 0, first_name: fname, last_name: lname, email: email as String, phone_number: mobile, profile_pic: "", favorite: false)
+                let tempContact = ContactList(id: 0, first_name: fname, last_name: lname, profile_pic: "", favorite: false, url: "",email: email as String ,phone_number: mobile)
                 
                 self.contact.append(tempContact)
-                self.people.append(tempPeople)
+                //self.people.append(tempPeople)
                
                 
                 var img = UIImage()
@@ -204,7 +213,7 @@ extension ContactScreenVC {
                 last += [$1]
                 collection[collection.count - 1] = last
             } else {
-                self.arrayIndexSection.append(String([$1].first?.first_name.prefix(1).uppercased() ?? "Z"))
+                 self.arrayIndexSection.append(String([$1].first?.first_name.prefix(1).uppercased() ?? ""))
                 collection += [[$1]]
             }
             return collection
