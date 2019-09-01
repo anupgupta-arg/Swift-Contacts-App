@@ -34,10 +34,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xlF-nZ-wDp">
-                        <rect key="frame" x="72" y="24" width="170" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="16" id="07j-Dt-fSb"/>
-                        </constraints>
+                        <rect key="frame" x="72" y="21.5" width="170" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" name="Black4A"/>
                         <nil key="highlightedColor"/>

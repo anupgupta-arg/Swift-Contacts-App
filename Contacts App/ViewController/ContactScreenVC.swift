@@ -72,6 +72,7 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
         cell.contactName.text = "\(personDetails.first_name ) \(personDetails.last_name )";
         let imgurl = personDetails.profile_pic;
         if personDetails.favorite {
+             cell.favImage.isHidden = false
              cell.favImage.image = UIImage.init(named: "fevStarGreen")
         }
             else{
