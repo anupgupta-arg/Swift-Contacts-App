@@ -48,6 +48,11 @@ class ContactDetailsScreenVC: UIViewController{
         self.showAlert(title: "Sorry", message: "Phone Number is not correct")
             return;
         }
+        guard number != "" else {
+            self.showAlert(title: "Sorry", message: "Phone Number is not Availabel")
+            return;
+        }
+        
         let messageVC = MFMessageComposeViewController()
         messageVC.body = "This is GO-JEK iOS Contacts App";
         messageVC.recipients = ["\(number)"]
@@ -86,6 +91,11 @@ class ContactDetailsScreenVC: UIViewController{
             self.showAlert(title: "Sorry", message: "NO email address availabel")
             return
         }
+        
+        guard recipient != "" else{
+            self.showAlert(title: "Sorry", message: "NO email address availabel")
+            return
+        }
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([recipient])
@@ -121,14 +131,15 @@ extension ContactDetailsScreenVC {
     
    func fetchPeopleCompleteDeatils(){
     
-    guard let id = peopleContactDetails?.id  else{
+    guard  let id = peopleContactDetails?.id else{
         return
     }
-     let peopleurl = "\(updatePeopleDetailsURL)\(id).json"
+    guard  id != 0 else{
+        return
+    }
+    let peopleurl = "\(updatePeopleDetailsURL)\(id).json"
     //let peopleurl : String = peopleContactDetails?.url ?? "";
-    guard peopleurl != "" else {
-        return
-    }
+
     self.view.makeToastActivity(.center)
     self.view.isUserInteractionEnabled = false
     
