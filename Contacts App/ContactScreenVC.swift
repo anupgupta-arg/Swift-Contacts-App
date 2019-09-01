@@ -14,7 +14,6 @@ class ContactScreenVC: UIViewController {
     @IBOutlet weak var contactListTable: UITableView!
     
     var contact = [ContactList]()
-    //var people = [PeopleDetails]()
     var groupContactArray = [[ContactList]]()
     
     let contactStore = CNContactStore()
@@ -56,7 +55,7 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 57
+        return 64
     }
     
     
@@ -137,9 +136,6 @@ extension ContactScreenVC {
         
         fetchContacts(completion: {contacts in
             contacts.forEach({
-//                print("Name: \($0.givenName), number: \($0.phoneNumbers.first?.value.stringValue ?? "nil")")
-//                print("Email: \($0.emailAddresses.first?.value ?? "nil")")
-                
                 let fname = $0.givenName
                 let lname = $0.familyName
                 let mobile = $0.phoneNumbers.first?.value.stringValue ?? ""
