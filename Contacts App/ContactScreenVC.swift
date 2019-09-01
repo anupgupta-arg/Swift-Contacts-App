@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SDWebImage
 import Contacts
+
 class ContactScreenVC: UIViewController {
     @IBOutlet weak var contactListTable: UITableView!
     
@@ -18,7 +19,7 @@ class ContactScreenVC: UIViewController {
     
     let contactStore = CNContactStore()
     var arrpic = NSMutableArray()
-   
+    
     
      var arrayIndexSection = [String]()
     
@@ -27,7 +28,7 @@ class ContactScreenVC: UIViewController {
         contactListTable.register(UINib(nibName:"ContactCell",bundle: nil), forCellReuseIdentifier: "ContactCellID")
         
         contactListTable.tableFooterView = UIView();
-        
+    
         
     }
     
@@ -35,6 +36,8 @@ class ContactScreenVC: UIViewController {
         super.viewWillAppear(animated);
         groupContactArray.removeAll();
         contact.removeAll();
+        self.view.makeToastActivity(.center)
+        self.view.isUserInteractionEnabled = false
         getContactListFromContactList();
         getContactListFromBackend();
     }
@@ -116,10 +119,14 @@ extension ContactScreenVC {
                self.groupContactArray = self.getGroupArray(modelArray: self.contact)
                 self.contactListTable.reloadData()
           //   print("test",test)
-                
-                
+                 self.view.isUserInteractionEnabled = true
+                self.view.hideToastActivity()
             } catch let error {
                 print(error)
+               
+                 self.view.hideToastActivity()
+                self.view.isUserInteractionEnabled = true
+                 self.showAlert(title: "Sorry", message: "Unable To fetch Data from Server")
             }
         }
     }
@@ -179,15 +186,21 @@ extension ContactScreenVC {
                 if grant{
                     do {
                         try store.enumerateContacts(with: fetchRequest, usingBlock: { (contact, stop) -> Void in
+                           
                             results.append(contact)
                         })
+                         self.view.isUserInteractionEnabled = true
                     }
                     catch let error {
                         print(error.localizedDescription)
+                         self.view.isUserInteractionEnabled = true
+                        self.showAlert(title: "Sorry", message: "Unable To fetch Data from contact list")
                     }
                     completion(results)
                 }else{
+                     self.view.isUserInteractionEnabled = true
                     print("Error \(error?.localizedDescription ?? "")")
+                    self.showAlert(title: "Sorry", message: "Unable To fetch Data from contact list")
                 }
             })
         }

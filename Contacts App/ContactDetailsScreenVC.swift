@@ -11,7 +11,6 @@ import Alamofire
 import SDWebImage
 import MessageUI
 
-
 class ContactDetailsScreenVC: UIViewController{
     
     @IBOutlet weak var avatar: UIImageView!
@@ -120,8 +119,6 @@ class ContactDetailsScreenVC: UIViewController{
 }
 extension ContactDetailsScreenVC {
     
-
-    
    func fetchPeopleCompleteDeatils(){
     
     guard let id = peopleContactDetails?.id  else{
@@ -132,14 +129,22 @@ extension ContactDetailsScreenVC {
     guard peopleurl != "" else {
         return
     }
+    self.view.makeToastActivity(.center)
+    self.view.isUserInteractionEnabled = false
+    
     Alamofire.request(peopleurl).response { response in
         guard let data = response.data else { return }
         do {
             let decoder = JSONDecoder()
+            self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
             self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
             self.fillDetails();
         } catch let error {
             print(error)
+            self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
+            self.showAlert(title: "Sorry", message: "Something went Wrong")
         }
     }
     }
@@ -243,70 +248,6 @@ extension ContactDetailsScreenVC {
         })
     }
 
-//    func updateContact(){
-//
-//        guard let id = peopleContactDetails?.id else {
-//            return;
-//        }
-//
-//        let updateUrl = "\(updatePeopleDetailsURL)\(id).json"
-//        let isFavorite: Bool?
-//        if peopleContactDetails!.favorite {
-//            isFavorite = false
-//        }
-//        else{
-//             isFavorite = true
-//        }
-//
-//        let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
-//                                         "last_name":  peopleContactDetails?.last_name as Any,
-//                                         "email": peopleContactDetails?.email as Any ,
-//                                         "phone_number": peopleContactDetails?.phone_number as Any ,
-//                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
-//                                         "favorite": isFavorite as Any
-//        ]
-//
-//        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-//            {
-//                (response:DataResponse<Any>) in
-//                print("response",response)
-//                print("re")
-//
-//                if (response.error != nil) {
-//                    // failure(response.error);
-//                }
-//                else if (response.value != nil) {
-//                    //success(response.value as! NSDictionary)
-//
-//                    print(response.value as Any)
-//
-//                    guard let data = response.data else { return }
-//                    do {
-//                        let decoder = JSONDecoder()
-//                        self.peopleContactDetails = try decoder.decode(ContactList.self, from: data)
-//                      // peopleContactDetails = contactDetails
-//
-//
-//                        self.fillDetails()
-//
-////                        self.contact.append(contentsOf: allContact)
-////
-////                        self.groupContactArray = self.getGroupArray(modelArray: self.contact)
-////                        self.contactListTable.reloadData()
-//                        //   print("test",test)
-//
-//
-//                    } catch let error {
-//                        print(error)
-//                    }
-//
-//                }
-//
-//
-//        }
-//    }
-//
-    
     func addNewContact() {
         
         guard peopleContactDetails?.first_name != "" else {
@@ -353,29 +294,4 @@ extension ContactDetailsScreenVC {
         })
     }
     
-//    func addNewContact() {
-//
-//
-//        let userDict : [String : Any] = ["first_name": peopleContactDetails?.first_name as Any,
-//                                         "last_name":  peopleContactDetails?.last_name as Any,
-//                                         "email": peopleContactDetails?.email as Any ,
-//                                         "phone_number": peopleContactDetails?.phone_number as Any ,
-//                                         "profile_pic": peopleContactDetails?.profile_pic ?? "",
-//                                         "favorite": true
-//        ]
-//
-//        Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
-//            {
-//                (response:DataResponse<Any>) in
-//                print("response",response)
-//                print("re")
-//                if (response.error != nil) {
-//                    // failure(response.error);
-//                }
-//                else if (response.value != nil) {
-//                    //success(response.value as! NSDictionary)
-//                    print(response.value as Any)
-//                }
-//        }
-//    }
 }

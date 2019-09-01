@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+
 class EditContactDeatilsVC: UIViewController {
     
     @IBOutlet weak var avatar: UIImageView!
@@ -105,17 +106,26 @@ extension EditContactDeatilsVC {
                                          "profile_pic": peopleContactDetails?.profile_pic ?? "",
                                          "favorite": peopleContactDetails?.favorite ?? ""
         ]
-        
+        self.view.isUserInteractionEnabled = true
+        self.view.makeToastActivity(.center)
+       
+       
         let apiCallObj = apiCall.init()
         apiCallObj.updateContact(apiUrl: updateUrl, userDict: userDict, success: { (contactDetails) -> Void in
             self.peopleContactDetails = contactDetails
             self.fillDetails();
             // show alert
+            self.view.isUserInteractionEnabled = true
+           
+            self.view.hideToastActivity()
             self.showAlert(title: "Success", message: "Conatct Update succesfully")
         },failure:  { (Error) -> Void in
             
             print("Error", Error as Any);
             // show alert
+            self.view.isUserInteractionEnabled = true
+            
+            self.view.hideToastActivity()
              self.showAlert(title: "Error", message: "Something went wrong")
         })
     }
@@ -131,14 +141,23 @@ extension EditContactDeatilsVC {
                                          
                                          ]
         let apiCallObj = apiCall.init()
+        self.view.isUserInteractionEnabled = false
+        self.view.makeToastActivity(.center)
+       
         apiCallObj.addNewContact(userDict: userDict, success: { (contactDetails) -> Void in
             self.peopleContactDetails = contactDetails
             self.fillDetails();
             // show alert
+            self.view.isUserInteractionEnabled = true
+           
+            self.view.hideToastActivity()
             self.showAlert(title: "Success", message: "Conatct Added succesfully")
         }, failure:  { (Error)-> Void in
             print("Error",Error as Any)
             // show alert
+            self.view.isUserInteractionEnabled = true
+           
+            self.view.hideToastActivity()
             self.showAlert(title: "Error", message: Error!.localizedDescription)
         })
     }
