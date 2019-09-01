@@ -11,6 +11,7 @@ import Alamofire
 import SDWebImage
 import MessageUI
 
+
 class ContactDetailsScreenVC: UIViewController{
     
     @IBOutlet weak var avatar: UIImageView!
@@ -53,6 +54,7 @@ class ContactDetailsScreenVC: UIViewController{
     @IBAction func callButtonAction(_ sender: Any) {
         guard let number = peopleContactDetails?.phone_number else {
             // Show alert message
+            print("call Did Not Configure")
             return;
         }
         
@@ -64,10 +66,27 @@ class ContactDetailsScreenVC: UIViewController{
                 UIApplication.shared.openURL(url)
             }
         }else{
-             // Show alert message
+            
         }
     }
     @IBAction func emailButtonAction(_ sender: Any) {
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            // Show alert message
+            print("Mail Did Not Configure")
+            return
+        }
+        guard let recipient = peopleContactDetails?.email else{
+            print("Mail Did Not Configure")
+            return
+        }
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([recipient])
+            mail.setMessageBody("This is GO-JEK iOS Contacts App", isHTML: true);
+            
+            present(mail, animated: true)
+       
     }
     @IBAction func favButtonAction(_ sender: Any) {
     }
@@ -132,6 +151,25 @@ extension ContactDetailsScreenVC:  MFMessageComposeViewControllerDelegate   {
             break
         }
     }
+    
+}
+extension ContactDetailsScreenVC : MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch (result) {
+        case .cancelled:
+            print("Message was cancelled")
+            dismiss(animated: true, completion: nil)
+        case .failed:
+            print("Message failed")
+            dismiss(animated: true, completion: nil)
+        case .sent:
+            print("Message was sent")
+            dismiss(animated: true, completion: nil)
+        default:
+            break
+        }
+    }
+    
     
 }
 
