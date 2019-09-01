@@ -15,12 +15,16 @@ class ContactScreenVC: UIViewController {
     
     var contact = [ContactList]()
     var people = [PeopleDetails]()
+    var groupContactArray = [[ContactList]]()
+    
     let contactStore = CNContactStore()
     var arrpic = NSMutableArray()
     var arrfname = NSMutableArray()
     var arrlname = NSMutableArray()
     var arrnumber = NSMutableArray()
     var arrEmail = NSMutableArray()
+    
+     var arrayIndexSection = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,25 +44,31 @@ class ContactScreenVC: UIViewController {
     @IBAction func addPeopleBarButtonAction(_ sender: Any) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
-      //  vc.peopleContactUpdated = peopleContactUpdated;
+        //  vc.peopleContactUpdated = peopleContactUpdated;
         //        navigationController?.present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     
-
+    
 }
 
 extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+       return groupContactArray.count
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contact.count;
+        return  groupContactArray[section].count //contact.count; //
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : ContactCell = contactListTable.dequeueReusableCell(withIdentifier: "ContactCellID") as! ContactCell
-        let personDetails = contact[indexPath.row];
+        let personDetails = groupContactArray[indexPath.section][indexPath.row] //contact[indexPath.row]; //
         cell.contactName.text = "\(personDetails.first_name ) \(personDetails.last_name )";
         let imgurl = personDetails.profile_pic;
-       
+        
         cell.avatar.sd_setImage(with: URL(string: imgurl as String ), placeholderImage:UIImage(named: "contactPlaceHolder") )
         return cell;
         
@@ -68,6 +78,14 @@ extension ContactScreenVC : UITableViewDelegate,UITableViewDataSource{
         let vc : ContactDetailsScreenVC = storyBoard.instantiateViewController(withIdentifier: "ContactDetailsScreenVCID") as! ContactDetailsScreenVC
         vc.peopleContactDeatils = contact[indexPath.row];
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "\(groupContactArray[section].first?.first_name.prefix(1) ?? "")"
+    }
+
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return arrayIndexSection
     }
     
     
@@ -81,10 +99,14 @@ extension ContactScreenVC {
             do {
                 let decoder = JSONDecoder()
                 let allContact = try decoder.decode([ContactList].self, from: data)
-//                self.contact = allContact
+                //                self.contact = allContact
                 self.contact.append(contentsOf: allContact)
+                
+               self.groupContactArray = self.getGroupArray(modelArray: self.contact)
                 self.contactListTable.reloadData()
-               
+          //   print("test",test)
+                
+                
             } catch let error {
                 print(error)
             }
@@ -98,29 +120,6 @@ extension ContactScreenVC {
     
     
     func getContactListFromContactList()  {
-        
-//        var contacts = [CNContact]()
-//       // let fullname = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
-//         //let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .phoneticFullName)]
-//
-//        let keys = [
-//            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-//            CNContactPhoneNumbersKey,
-//            CNContactEmailAddressesKey,
-//            ] as [Any]
-//        let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
-//
-//        do {
-//            try self.contactStore.enumerateContacts(with: request) {
-//                (contact, stop) in
-//                // Array containing all unified contacts from everywhere
-//                contacts.append(contact)
-//                print("contacts from phone",contacts)
-//            }
-//        }
-//        catch {
-//            print("unable to fetch contacts")
-//        }
         
         
         
@@ -138,14 +137,11 @@ extension ContactScreenVC {
                 
                 
                 let tempPeople = PeopleDetails(id: 0, first_name: fname, last_name: lname, email: email as String, phone_number: mobile, profile_pic: "", favorite: false)
-               let tempContact = ContactList(id: 0, first_name: fname, last_name: lname, profile_pic: "", favorite: false, url: "")
+                let tempContact = ContactList(id: 0, first_name: fname, last_name: lname, profile_pic: "", favorite: false, url: "")
                 
                 self.contact.append(tempContact)
                 self.people.append(tempPeople)
-                self.arrfname.add("\($0.givenName)")
-                self.arrlname.add("\($0.familyName)")
-                self.arrnumber.add("\($0.phoneNumbers.first?.value.stringValue ?? "nil")")
-                self.arrEmail.add("\($0.emailAddresses.first?.value ?? "nil")")
+               
                 
                 var img = UIImage()
                 if $0.thumbnailImageData != nil
@@ -160,7 +156,7 @@ extension ContactScreenVC {
             })
             if contacts.count > 0
             {
-               
+                
                 self.contactListTable.reloadData()
                 
             }
@@ -195,4 +191,25 @@ extension ContactScreenVC {
         }
     }
     
+}
+
+extension ContactScreenVC {
+    
+    func getGroupArray(modelArray:[ContactList])->[[ContactList]]{
+        self.contact = modelArray.sorted(by: { $0.first_name.uppercased() < $1.first_name.uppercased() })
+        let groupContactArray = self.contact.reduce([[ContactList]]()) {
+            guard var last = $0.last else { return [[$1]] }
+            var collection = $0
+            if last.first!.first_name.prefix(1).uppercased() == $1.first_name.prefix(1).uppercased() {
+                last += [$1]
+                collection[collection.count - 1] = last
+            } else {
+                self.arrayIndexSection.append(String([$1].first?.first_name.prefix(1).uppercased() ?? "Z"))
+                collection += [[$1]]
+            }
+            return collection
+        }
+        
+        return groupContactArray
+    }
 }
