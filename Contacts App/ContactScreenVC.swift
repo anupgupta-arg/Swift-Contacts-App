@@ -137,21 +137,18 @@ extension ContactScreenVC {
         
         fetchContacts(completion: {contacts in
             contacts.forEach({
-                print("Name: \($0.givenName), number: \($0.phoneNumbers.first?.value.stringValue ?? "nil")")
-                print("Email: \($0.emailAddresses.first?.value ?? "nil")")
+//                print("Name: \($0.givenName), number: \($0.phoneNumbers.first?.value.stringValue ?? "nil")")
+//                print("Email: \($0.emailAddresses.first?.value ?? "nil")")
                 
                 let fname = $0.givenName
                 let lname = $0.familyName
                 let mobile = $0.phoneNumbers.first?.value.stringValue ?? ""
                 let email = $0.emailAddresses.first?.value ?? ""
                 
-               // let tempPeople = PeopleDetails(id: 0, first_name: fname, last_name: lname, email: email as String, phone_number: mobile, profile_pic: "", favorite: false)
+               
                 let tempContact = ContactList(id: 0, first_name: fname, last_name: lname, profile_pic: "", favorite: false, url: "",email: email as String ,phone_number: mobile)
                 
                 self.contact.append(tempContact)
-                //self.people.append(tempPeople)
-               
-                
                 var img = UIImage()
                 if $0.thumbnailImageData != nil
                 {

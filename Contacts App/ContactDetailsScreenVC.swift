@@ -17,20 +17,18 @@ class ContactDetailsScreenVC: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     
     var peopleContactDetails : ContactList?
-   // var peopleContactUpdated : PeopleDetails?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fillDetails()
         fetchPeopleCompleteDeatils()
-//        avatar.layer.cornerRadius = 50
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         let edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
-       
+        
         navigationItem.rightBarButtonItem = edit
     }
     
@@ -48,7 +46,7 @@ class ContactDetailsScreenVC: UIViewController {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
         vc.peopleContactDetails = peopleContactDetails;
-//        navigationController?.present(vc, animated: true, completion: nil)
+        //        navigationController?.present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -83,14 +81,5 @@ extension ContactDetailsScreenVC {
         emailLabel.text = peopleContactDetails?.email
     }
     
-    
-//    func updateDetails()  {
-//
-//        avatar.sd_setImage(with: URL(string: peopleContactDetails?.profile_pic ?? "" ), placeholderImage:UIImage(named: "contactPlaceHolder") )
-//        contactName.text = "\(peopleContactDetails?.first_name ?? "" ) \(peopleContactDetails?.last_name ?? "")"
-//        mobileNumberLabel.text = peopleContactDetails?.phone_number
-//        emailLabel.text = peopleContactDetails?.email
-//    }
-    
-    
+
 }
