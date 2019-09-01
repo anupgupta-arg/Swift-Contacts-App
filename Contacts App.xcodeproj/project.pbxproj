@@ -10,6 +10,9 @@
 		36EC75650333E989D53A37FC /* Pods_Contacts_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C830927EBCCEFDED9EC886D4 /* Pods_Contacts_App.framework */; };
 		E58348E1231BA849006FA4E3 /* PhoneContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E0231BA849006FA4E3 /* PhoneContacts.swift */; };
 		E58348E3231BEA5E006FA4E3 /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E2231BEA5E006FA4E3 /* Designable.swift */; };
+		E58348E5231C1093006FA4E3 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E4231C1093006FA4E3 /* Validator.swift */; };
+		E58348E7231C16A8006FA4E3 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E6231C16A7006FA4E3 /* Alert.swift */; };
+		E58348E9231C1BC3006FA4E3 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E8231C1BC2006FA4E3 /* Api.swift */; };
 		E5B39A7C231A2C6F00A61083 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39A7B231A2C6F00A61083 /* AppDelegate.swift */; };
 		E5B39A7E231A2C6F00A61083 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39A7D231A2C6F00A61083 /* ViewController.swift */; };
 		E5B39A81231A2C6F00A61083 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5B39A7F231A2C6F00A61083 /* Main.storyboard */; };
@@ -58,6 +61,9 @@
 		E12AAB5CB6339B148DAF994B /* Pods-Contacts AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contacts AppTests.release.xcconfig"; path = "Target Support Files/Pods-Contacts AppTests/Pods-Contacts AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		E58348E0231BA849006FA4E3 /* PhoneContacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContacts.swift; sourceTree = "<group>"; };
 		E58348E2231BEA5E006FA4E3 /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
+		E58348E4231C1093006FA4E3 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		E58348E6231C16A7006FA4E3 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		E58348E8231C1BC2006FA4E3 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		E5B39A78231A2C6F00A61083 /* Contacts App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contacts App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B39A7B231A2C6F00A61083 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5B39A7D231A2C6F00A61083 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,8 +170,11 @@
 				E5B39AAC231A2D5000A61083 /* ContactScreenVC.swift */,
 				E58348E0231BA849006FA4E3 /* PhoneContacts.swift */,
 				E5B39AB9231A7EFC00A61083 /* ContactDetailsScreenVC.swift */,
+				E58348E4231C1093006FA4E3 /* Validator.swift */,
+				E58348E6231C16A7006FA4E3 /* Alert.swift */,
 				E58348E2231BEA5E006FA4E3 /* Designable.swift */,
 				E5B39ABB231A97BB00A61083 /* EditContactDeatilsVC.swift */,
+				E58348E8231C1BC2006FA4E3 /* Api.swift */,
 				E5B39AB7231A7E6600A61083 /* ContactListModel.swift */,
 				E5B39A7F231A2C6F00A61083 /* Main.storyboard */,
 				E5B39AAE231A2DFE00A61083 /* ContactCell.swift */,
@@ -430,8 +439,11 @@
 				E5B39ABC231A97BB00A61083 /* EditContactDeatilsVC.swift in Sources */,
 				E5B39AB5231A4FC100A61083 /* Constant.swift in Sources */,
 				E5B39AB0231A2DFE00A61083 /* ContactCell.swift in Sources */,
+				E58348E9231C1BC3006FA4E3 /* Api.swift in Sources */,
 				E5B39AB8231A7E6600A61083 /* ContactListModel.swift in Sources */,
+				E58348E5231C1093006FA4E3 /* Validator.swift in Sources */,
 				E5B39A84231A2C6F00A61083 /* Contacts_App.xcdatamodeld in Sources */,
+				E58348E7231C16A8006FA4E3 /* Alert.swift in Sources */,
 				E58348E3231BEA5E006FA4E3 /* Designable.swift in Sources */,
 				E5B39AB3231A488200A61083 /* AlamofireConnectionMangager.swift in Sources */,
 				E58348E1231BA849006FA4E3 /* PhoneContacts.swift in Sources */,

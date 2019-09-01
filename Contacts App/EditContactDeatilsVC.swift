@@ -50,6 +50,33 @@ extension EditContactDeatilsVC {
     }
     @objc func doneButtonTapped() {
         
+        
+        guard firstNameTextField.text != "" else {
+            print("first nmae111")
+            self.showErrorAlert(title: "Error", message: "Please enter valid first name.")
+ 
+            return
+        }
+        
+        guard lastNameTextField.text != "" else {
+             print("first nmae2222")
+             self.showErrorAlert(title: "Error", message: "Please enter valid last name")
+            return
+        }
+        guard mobileNumberTextField.text != "" && mobileNumberTextField.text!.isPhoneNumber  else {
+             print("first nmae333")
+             self.showErrorAlert(title: "Error", message: "Please enter valid mobile number")
+            return
+        }
+        guard emailTextField.text != "" && (emailTextField.text?.isValidEmail())!   else {
+             print("first nmae444")
+            self.showErrorAlert(title: "Error", message: "Please enter valid email")
+           
+           
+            return
+        }
+        
+        
         if peopleContactDetails?.id == 0 ||  peopleContactDetails == nil{
             addNewContact();
         }
