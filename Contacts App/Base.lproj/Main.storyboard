@@ -358,6 +358,7 @@
                         <outlet property="avatar" destination="pqg-Lg-rBn" id="dx9-VF-H4b"/>
                         <outlet property="contactName" destination="5p6-DI-V9F" id="20O-IV-5p5"/>
                         <outlet property="emailLabel" destination="mCc-iq-T5j" id="czp-be-TP4"/>
+                        <outlet property="favButton" destination="kVB-XL-JuF" id="TxA-Bg-L5R"/>
                         <outlet property="mobileNumberLabel" destination="8Su-YS-pkF" id="Yup-SR-Esk"/>
                     </connections>
                 </viewController>

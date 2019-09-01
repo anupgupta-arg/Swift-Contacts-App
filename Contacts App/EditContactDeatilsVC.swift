@@ -50,7 +50,7 @@ extension EditContactDeatilsVC {
     }
     @objc func doneButtonTapped() {
         
-        if peopleContactDetails == nil {
+        if peopleContactDetails?.id == 0 ||  peopleContactDetails == nil{
             addNewContact();
         }
         else{
@@ -69,9 +69,7 @@ extension EditContactDeatilsVC {
                                          "email": emailTextField.text ?? "",
                                          "phone_number": mobileNumberTextField.text ?? "",
                                          "profile_pic": peopleContactDetails?.profile_pic ?? "",
-                                         "favorite": peopleContactDetails?.favorite ?? "",
-                                         //                                       "created_at": "2016-05-29T10:10:10.995Z",
-            //                                       "updated_at": "2016-05-29T10:10:10.995Z"
+                                         "favorite": peopleContactDetails?.favorite ?? ""
         ]
         
         Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
@@ -102,8 +100,7 @@ extension EditContactDeatilsVC {
                                          "phone_number": mobileNumberTextField.text ?? "",
                                          "profile_pic": peopleContactDetails?.profile_pic ?? "",
                                          "favorite": peopleContactDetails?.favorite ?? "",
-                                         //                                       "created_at": "2016-05-29T10:10:10.995Z",
-            //                                       "updated_at": "2016-05-29T10:10:10.995Z"
+                                       
         ]
         
         Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
