@@ -50,21 +50,29 @@ extension EditContactDeatilsVC {
     }
     @objc func doneButtonTapped() {
         
-        let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated!.id).json"
+        if peopleContactUpdated == nil {
+            addNewContact();
+        }
+        else{
+            updateContact();
+        }
+        
+        
+    }
+ 
+    func updateContact(){
+        
+        let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated?.id ?? nil).json"
         
         let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
-                                       "last_name": lastNameTextField.text ?? "",
-                                       "email": emailTextField.text ?? "",
-                                       "phone_number": mobileNumberTextField.text ?? "",
-                                       "profile_pic": peopleContactUpdated?.profile_pic ?? "",
-                                       "favorite": peopleContactUpdated?.favorite ?? "",
-//                                       "created_at": "2016-05-29T10:10:10.995Z",
-//                                       "updated_at": "2016-05-29T10:10:10.995Z"
+                                         "last_name": lastNameTextField.text ?? "",
+                                         "email": emailTextField.text ?? "",
+                                         "phone_number": mobileNumberTextField.text ?? "",
+                                         "profile_pic": peopleContactUpdated?.profile_pic ?? "",
+                                         "favorite": peopleContactUpdated?.favorite ?? "",
+                                         //                                       "created_at": "2016-05-29T10:10:10.995Z",
+            //                                       "updated_at": "2016-05-29T10:10:10.995Z"
         ]
-        
-  
-        
-        
         
         Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
             {
@@ -83,25 +91,36 @@ extension EditContactDeatilsVC {
         }
     }
     
-}
-
-
-extension NSDictionary {
-    
-    func toJSonString(data : NSDictionary) -> String {
+    func addNewContact() {
         
-        var jsonString = "";
         
-        do {
-            
-            let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
-            jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
-            
-        } catch {
-            print(error.localizedDescription)
+      //  let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated?.id ?? nil).json"
+        
+        let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
+                                         "last_name": lastNameTextField.text ?? "",
+                                         "email": emailTextField.text ?? "",
+                                         "phone_number": mobileNumberTextField.text ?? "",
+                                         "profile_pic": peopleContactUpdated?.profile_pic ?? "",
+                                         "favorite": peopleContactUpdated?.favorite ?? "",
+                                         //                                       "created_at": "2016-05-29T10:10:10.995Z",
+            //                                       "updated_at": "2016-05-29T10:10:10.995Z"
+        ]
+        
+        Alamofire.request(baseUrl , method: .post, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
+            {
+                (response:DataResponse<Any>) in
+                print("response",response)
+                print("re")
+                if (response.error != nil) {
+                    // failure(response.error);
+                }
+                else if (response.value != nil) {
+                    //success(response.value as! NSDictionary)
+                    print(response.value as Any)
+                }
         }
-        
-        return jsonString;
     }
     
 }
+
+

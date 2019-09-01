@@ -22,7 +22,14 @@ class ContactScreenVC: UIViewController {
         getContactListFromBackend();
     }
     
-
+    @IBAction func addPeopleBarButtonAction(_ sender: Any) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc : EditContactDeatilsVC = storyBoard.instantiateViewController(withIdentifier: "EditContactDeatilsVCID") as! EditContactDeatilsVC
+      //  vc.peopleContactUpdated = peopleContactUpdated;
+        //        navigationController?.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 
 }
 
