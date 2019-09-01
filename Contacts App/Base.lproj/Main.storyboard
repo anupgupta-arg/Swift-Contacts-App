@@ -435,7 +435,7 @@
                                                 <rect key="frame" x="156" y="21.5" width="226" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="SmU-fN-Vey" id="x0n-64-IDJ"/>
                                                 </connections>
@@ -476,7 +476,7 @@
                                                 <rect key="frame" x="156" y="21.5" width="226" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="SmU-fN-Vey" id="umU-gn-fBk"/>
                                                 </connections>
@@ -517,7 +517,7 @@
                                                 <rect key="frame" x="156" y="21.5" width="226" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="SmU-fN-Vey" id="tko-3c-eKD"/>
                                                 </connections>
@@ -558,7 +558,7 @@
                                                 <rect key="frame" x="156" y="21.5" width="226" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="SmU-fN-Vey" id="yp2-LI-MC8"/>
                                                 </connections>
