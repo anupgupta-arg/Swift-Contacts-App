@@ -50,31 +50,26 @@ extension EditContactDeatilsVC {
     }
     @objc func doneButtonTapped() {
         
-        let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated!.id).json)"
+        let updateUrl = "\(updatePeopleDetailsURL)\(peopleContactUpdated!.id).json"
         
-        let userDict  = ["first_name": firstNameTextField.text ?? "",
+        let userDict : [String : Any] = ["first_name": firstNameTextField.text ?? "",
                                        "last_name": lastNameTextField.text ?? "",
                                        "email": emailTextField.text ?? "",
                                        "phone_number": mobileNumberTextField.text ?? "",
                                        "profile_pic": peopleContactUpdated?.profile_pic ?? "",
                                        "favorite": peopleContactUpdated?.favorite ?? "",
-                                       "created_at": "2016-05-29T10:10:10.995Z",
-                                       "updated_at": "2016-05-29T10:10:10.995Z" ]
+//                                       "created_at": "2016-05-29T10:10:10.995Z",
+//                                       "updated_at": "2016-05-29T10:10:10.995Z"
+        ]
         
-        let paramStr = userDict.toJSonString(data: userDict)
-        
-//        "mode": "raw",
-//        "raw": "{\n  \"first_name\": \"Updated\",\n  \"last_name\":
-        
-        //let param  = ["mode":"raw",
-                   //   "raw" :paramStr];
+  
         
         
         
-        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: URLEncoding.default, headers: nil).responseJSON
+        Alamofire.request(updateUrl , method: .put, parameters: userDict , encoding: JSONEncoding.default, headers: nil).responseJSON
             {
                 (response:DataResponse<Any>) in
-                
+                print("response",response)
                 print("re")
                 if (response.error != nil) {
                     // failure(response.error);
