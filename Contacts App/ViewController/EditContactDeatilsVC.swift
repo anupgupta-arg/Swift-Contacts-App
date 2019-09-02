@@ -29,6 +29,8 @@ class EditContactDeatilsVC: UIViewController {
         let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         
         navigationItem.rightBarButtonItem = done
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
     
@@ -160,6 +162,14 @@ extension EditContactDeatilsVC {
             self.view.hideToastActivity()
             self.showAlert(title: "Error", message: Error!.localizedDescription)
         })
+    }
+}
+extension EditContactDeatilsVC :UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        self.view.endEditing(true)
+        return true;
     }
 }
 

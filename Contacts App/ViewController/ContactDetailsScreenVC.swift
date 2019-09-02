@@ -112,8 +112,7 @@ class ContactDetailsScreenVC: UIViewController{
         else{
             updateContact();
         }
-        
-        
+ 
         
     }
     
