@@ -13,6 +13,7 @@
 		E58348E7231C16A8006FA4E3 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E6231C16A7006FA4E3 /* Alert.swift */; };
 		E58348E9231C1BC3006FA4E3 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348E8231C1BC2006FA4E3 /* Api.swift */; };
 		E58348EB231C531D006FA4E3 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58348EA231C531C006FA4E3 /* Toast.swift */; };
+		E5834931231CF6E8006FA4E3 /* EditPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5834930231CF6E8006FA4E3 /* EditPageTests.swift */; };
 		E5B39A7C231A2C6F00A61083 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B39A7B231A2C6F00A61083 /* AppDelegate.swift */; };
 		E5B39A81231A2C6F00A61083 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5B39A7F231A2C6F00A61083 /* Main.storyboard */; };
 		E5B39A84231A2C6F00A61083 /* Contacts_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E5B39A82231A2C6F00A61083 /* Contacts_App.xcdatamodeld */; };
@@ -63,6 +64,7 @@
 		E58348E6231C16A7006FA4E3 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E58348E8231C1BC2006FA4E3 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		E58348EA231C531C006FA4E3 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		E5834930231CF6E8006FA4E3 /* EditPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageTests.swift; sourceTree = "<group>"; };
 		E5B39A78231A2C6F00A61083 /* Contacts App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contacts App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B39A7B231A2C6F00A61083 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5B39A80231A2C6F00A61083 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				E5B39A93231A2C7100A61083 /* Contacts_AppTests.swift */,
 				E5B39A95231A2C7100A61083 /* Info.plist */,
+				E5834930231CF6E8006FA4E3 /* EditPageTests.swift */,
 			);
 			path = "Contacts AppTests";
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5834931231CF6E8006FA4E3 /* EditPageTests.swift in Sources */,
 				E5B39A94231A2C7100A61083 /* Contacts_AppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
